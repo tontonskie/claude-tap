@@ -1,0 +1,27 @@
+{
+  "rootDir": ".",
+  "roots": ["<rootDir>/testing", "<rootDir>/src"],
+  "testEnvironment": "node",
+  "testRegex": ".*\\.spec\\.ts$",
+  "testTimeout": 30000,
+  "resetMocks": true,
+  "resetModules": true,
+  "restoreMocks": true,
+  "collectCoverage": true,
+  "coverageDirectory": "<rootDir>/coverage",
+  "coverageReporters": ["html-spa", "text-summary"],
+  "collectCoverageFrom": ["src/**/*.(t|j)s"],
+  "coverageThreshold": {
+    "global": {
+      "branches": 50,
+      "functions": 50,
+      "lines": 50
+    }
+  },
+  "transform": {
+    "^.+\\.(t|j)s$": "@swc/jest"
+  },
+  "transformIgnorePatterns": ["/node_modules/"],
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "setupFilesAfterEnv": ["<rootDir>/testing/hooks.ts"]
+}

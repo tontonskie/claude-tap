@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "noErrorTruncation": true,
+    "target": "es2023",
+    "skipLibCheck": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "module": "commonjs",
+    "noEmit": true,
+    "incremental": false,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/testing/*": ["./testing/*"],
+      "@/*": ["./src/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist", "coverage"]
+}

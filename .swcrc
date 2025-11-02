@@ -1,0 +1,20 @@
+{
+  "$schema": "https://swc.rs/schema.json",
+  "sourceMaps": "inline",
+  "module": {
+    "type": "commonjs",
+    "strictMode": true,
+    "noInterop": false
+  },
+  "jsc": {
+    "target": "es2023",
+    "parser": {
+      "syntax": "typescript"
+    },
+    "paths": {
+      "@/testing/*": ["./testing/*"],
+      "@/*": ["./src/*"]
+    },
+    "baseUrl": "./"
+  }
+}

@@ -1,0 +1,14 @@
+name: claude-tap
+
+services:
+  main:
+    container_name: claude-tap-main
+    build:
+      context: .
+    command: sleep infinity
+    volumes:
+      - .:/claude-tap/main
+      - main_node_modules:/claude-tap/main/node_modules
+
+volumes:
+  main_node_modules:
