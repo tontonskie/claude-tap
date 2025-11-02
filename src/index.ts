@@ -1,1 +1,1 @@
-export class ClaudeTap {}
+export * from '@/lib'

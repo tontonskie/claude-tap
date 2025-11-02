@@ -1,5 +1,8 @@
+import { config } from 'dotenv'
 import { program } from 'commander'
 import '@/actions/send'
+
+config({ quiet: true })
 
 program
   .name('Claude Tap CLI')
