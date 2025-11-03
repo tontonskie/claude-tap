@@ -2,8 +2,7 @@
   "name": "claude-tap",
   "version": "0.0.1",
   "description": "A command line tool for claude hooks to send message to slack channel",
-  "main": "dist/index.js",
-  "bin": "dist/cli.js",
+  "bin": "dist/index.js",
   "files": [
     "dist",
     "src"
@@ -19,13 +18,13 @@
   "license": "ISC",
   "scripts": {
     "type-check": "tsc",
-    "lint": "eslint && prettier --log-level=error --check .",
-    "format": "prettier --log-level=error --write .",
+    "lint": "eslint && prettier --log-level=warn --check .",
+    "format": "prettier --log-level=warn --write .",
     "build": "npm run lint && rm -rf dist && tsc --project tsconfig.build.json && swc src -d dist --strip-leading-paths",
     "test": "jest"
   },
   "dependencies": {
-    "@slack/webhook": "7.0.6",
+    "@slack/web-api": "7.12.0",
     "commander": "14.0.2",
     "dotenv": "17.2.3"
   },
@@ -35,7 +34,7 @@
     "@swc/core": "1.14.0",
     "@swc/jest": "0.2.39",
     "@types/jest": "30.0.0",
-    "@types/node": "22.18.13",
+    "@types/node": "22.19.0",
     "eslint": "9.39.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-jest": "29.0.1",
