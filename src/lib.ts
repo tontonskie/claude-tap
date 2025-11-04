@@ -1,9 +1,11 @@
-import { WebClient, ChatPostMessageArguments } from '@slack/web-api'
+import { WebClient, ChatPostMessageArguments, KnownBlock } from '@slack/web-api'
 import { mkdir, writeFile, readFile } from 'fs/promises'
 import { homedir } from 'os'
-import { BaseHookInput } from '@/types'
+import { HookInput } from '@/types'
 
-export async function getHookInputFromStdIn<T extends BaseHookInput>(): Promise<T> {
+export async function getHookInputFromStdIn<HookEventName extends HookInput['hook_event_name']>(
+  expectedHookEventName: HookEventName
+) {
   if (process.stdin.isTTY) {
     throw new Error('No piped input')
   }
@@ -13,7 +15,12 @@ export async function getHookInputFromStdIn<T extends BaseHookInput>(): Promise<
     chunks.push(chunk)
   }
 
-  return JSON.parse(Buffer.concat(chunks).toString('utf8'))
+  const hookInput: HookInput = JSON.parse(Buffer.concat(chunks).toString('utf8'))
+  if (hookInput.hook_event_name !== expectedHookEventName) {
+    throw new Error(`Hook event name should be ${expectedHookEventName}`)
+  }
+
+  return hookInput as Extract<HookInput, { hook_event_name: HookEventName }>
 }
 
 export async function sendMessage(
@@ -32,10 +39,41 @@ export async function sendMessage(
     }
   }
 
-  if (threadId) {
+  if (!threadId) {
+    if ('text' in message) {
+      message.text = `Notification from a new conversation with Claude${message.text ? ` - ${message.text}` : ''}`
+    }
+
+    if ('blocks' in message && Array.isArray(message.blocks)) {
+      const newBlocks: KnownBlock[] = [
+        {
+          type: 'section',
+          fields: [
+            {
+              type: 'mrkdwn',
+              text: `*Session ID*\n\`${hookInputSessionId}\``
+            }
+          ]
+        }
+      ]
+
+      if (mentionUserId) {
+        newBlocks.unshift({
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `<@${mentionUserId}>`
+          }
+        })
+      }
+
+      message.blocks = [...newBlocks, ...message.blocks]
+    }
+  } else {
     message.thread_ts = threadId
-  } else if (mentionUserId && 'text' in message) {
-    message.text = `<@${mentionUserId}>\n${message.text}`
+    if ('text' in message) {
+      message.text = `Work done on the current conversation with Claude${message.text ? ` - ${message.text}` : ''}`
+    }
   }
 
   const slack = new WebClient(process.env.CLAUDE_TAP_SLACK_BOT_TOKEN)
