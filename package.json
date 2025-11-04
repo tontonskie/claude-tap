@@ -1,6 +1,6 @@
 {
   "name": "claude-tap",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A command line tool for claude hooks to send message to slack channel",
   "bin": "dist/index.js",
   "files": [
