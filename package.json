@@ -20,28 +20,29 @@
     "type-check": "tsc",
     "lint": "eslint && prettier --log-level=warn --check .",
     "format": "prettier --log-level=warn --write .",
-    "build": "npm run lint && rm -rf dist && tsc --project tsconfig.build.json && swc src -d dist --strip-leading-paths",
+    "build": "npm run lint && npm run type-check && rm -rf dist && swc src -d dist --strip-leading-paths",
     "test": "jest"
   },
   "dependencies": {
+    "@commander-js/extra-typings": "14.0.0",
     "@slack/web-api": "7.12.0",
     "commander": "14.0.2",
     "dotenv": "17.2.3"
   },
   "devDependencies": {
-    "@eslint/js": "9.39.0",
+    "@eslint/js": "9.39.1",
     "@swc/cli": "0.7.8",
     "@swc/core": "1.14.0",
     "@swc/jest": "0.2.39",
     "@types/jest": "30.0.0",
     "@types/node": "22.19.0",
-    "eslint": "9.39.0",
+    "eslint": "9.39.1",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-jest": "29.0.1",
     "eslint-plugin-prettier": "5.5.4",
     "jest": "30.2.0",
     "prettier": "3.6.2",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.46.2"
+    "typescript-eslint": "8.46.3"
   }
 }

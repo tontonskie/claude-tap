@@ -1,5 +1,5 @@
 // Base type shared by all hooks - matches Claude Code's snake_case format
-type BaseHookInput = {
+export type BaseHookInput = {
   session_id: string
   transcript_path: string
   cwd: string
